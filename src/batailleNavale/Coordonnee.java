@@ -1,5 +1,7 @@
 package batailleNavale;
 
+
+
 public class Coordonnee {
 
 	private int ligne;
@@ -9,10 +11,10 @@ public class Coordonnee {
 	
 	
 	public Coordonnee(int ligne, int colonne) {
-		this.ligne=ligne-1;
-		this.colonne=colonne-1;
+		this.ligne=ligne;
+		this.colonne=colonne;
 		if((this.ligne<0)|| (this.ligne>25)|| (this.colonne<0)|| (this.colonne>25)){
-			throw new RuntimeException( "Indice  hors limite" );
+			throw new RuntimeException( "Indice wé  hors limite" );
 		}
 //		for(int i=0;i<26;i++){
 //			colonne='A'+i;
@@ -22,16 +24,16 @@ public class Coordonnee {
 	}
 	public Coordonnee(String s) {
 		
-		this.ligne=Integer.parseInt(s.substring(1, 2))-1;
+		this.ligne=Integer.parseInt(s.substring(1, 2));
 		this.colonne=(int)(s.charAt(0))-65;
-		if((this.ligne<0)|| (this.ligne>25)|| (this.colonne<0)|| (this.colonne>25)){
+		if((this.ligne<0)|| (this.ligne>26)|| (this.colonne<0)|| (this.colonne>26)){
 			throw new RuntimeException( "Indice  hors limite" );}
 		
 	}
 	public String toString() {
 		
 		String s="";
-		return s+(char)(this.colonne+'A')+(this.ligne+1)+"";
+		return s+(char)(this.colonne+'A')+(this.ligne)+"";
 	}
 	public int getLigne() {
 		
@@ -107,3 +109,4 @@ public boolean voisine(Coordonnee c) {
 	}
 
 }
+
