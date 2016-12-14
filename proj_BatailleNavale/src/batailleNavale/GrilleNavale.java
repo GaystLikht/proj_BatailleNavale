@@ -37,7 +37,7 @@ public class GrilleNavale {
 	
 	public String toString() {
 		Coordonnee[] tirsRecus=new Coordonnee[676]; 
-		
+		 //pour verifie -> estNavire et estTouche -> X 
 		String s="";
 		for (int i = 0; i < nbNavires; i++) {
 			
@@ -45,13 +45,51 @@ public class GrilleNavale {
 
 			if(!(this.navires[i].recoitTir(tirsRecus[j]))){
 				s=s+'.';
-			}
+			}else if(!(this.navires[i].contient(tirsRecus[j]))&&(!this.navires[i].estTouche(tirsRecus[j]))){
+				
+				s=s+'#';
+
+			}else if(!(this.navires[i].contient(tirsRecus[j]))&&(!this.navires[i].estTouche(tirsRecus[j]))){
+				
+				s=s+'#';
+				}else if(this.navires[i].estTouche(tirsRecus[j])){
+					
+					s=s+'X';}else if(this.navires[i].recoitTir(tirsRecus[j])){
+						
+						s=s+'O';}
 
 			
-		}
-	}
+		
+	}}
 		return s;
 	}	
+	
+	
+	
+	 public boolean ajouteNavire(Navire n){
+		 
+		 
+		for (int i = 0; i < this.nbNavires; i++)
+
+		 if(this.navires[i].chevauche(n)||this.navires[i].touche(n))
+			 return false;
+		
+		return true;
+	 }
+	
+	public void placementAuto(int[] taillesNavires) {
+		
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 //	public String toString() {...}
 //	public boolean ajouteNavire(Navire n) {...}
 //	public void placementAuto(int[] taillesNavires) {...}

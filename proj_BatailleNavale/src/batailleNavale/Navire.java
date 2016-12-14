@@ -40,116 +40,132 @@ public class Navire {
 		return fin;
 	}
 
-	public String toString() { 
+	public String toString() {
 
-	int l=0;
+		int l = 0;
 		if (this.debut.getLigne() == this.fin.getLigne()) {
-			l=this.fin.getColonne()-this.debut.getColonne();
-			return "Navire(" + this.debut + "," + (l) + "Horizontal)";
-			
-		}
-		
-		else{
-			 l=this.fin.getLigne()-this.debut.getLigne();
-			return  "Navire(" + this.debut + "," +l+ "," + "Vertical)";
-			
-		}}
- // return s+s1;
-	//}
-//////////////////////// contient 
-	public boolean contient(Coordonnee c) {
-		
-		if ((c.getLigne()<debut.getLigne())||(c.getLigne()>fin.getLigne())||(c.getColonne()>fin.getColonne())||(c.getColonne()<debut.getColonne()) ) {
-			return false ;
+			l = this.fin.getColonne() - this.debut.getColonne();
+			return "Navire(" + this.debut + "," + (l) + ", Horizontal)";
 
+		}
+
+		else {
+			l = this.fin.getLigne() - this.debut.getLigne();
+			return "Navire(" + this.debut + "," + l + ", Vertical)";
+
+		}
+	}
+
+	// return s+s1;
+	// }
+	//////////////////////// contient
+	public boolean contient(Coordonnee c) {
+
+		int lig = c.getLigne();
+		int col = c.getColonne();
+		return lig >= debut.getLigne() && lig <= fin.getLigne() && col >= debut.getColonne() && col <= fin.getColonne();
+//		
+//		if ((c.getLigne() < debut.getLigne()) || (c.getLigne() > fin.getLigne()) || (c.getColonne() > fin.getColonne())
+//				|| (c.getColonne() < debut.getColonne())) {
+//			return false;
+//
+//		} else {
+//
+//			return true;
+//
+//		}
+//
+	}
+
+	//////////////////////////////////////////////
+	public void ajouternbtouche(Coordonnee c) {
+		if (this.contient(c)) {
+			this.nbTouchees++;
+		}
+
+	}
+
+	public boolean touche(Navire n) {
+
+		if ((n.fin.getLigne() == this.debut.getLigne() - 1) || (n.debut.getLigne() == this.fin.getLigne() + 1)
+				|| (n.fin.getColonne() == this.debut.getColonne() - 1)
+				|| (n.debut.getColonne() == this.fin.getColonne() + 1)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	////////////////////////////////
+	public boolean chevauche(Navire n) {
+
+		if (((fin.getLigne() - n.debut.getLigne()) >= 0) || ((fin.getColonne() - n.debut.getColonne()) >= 0)) {
+			return true;
+		}
+
+		else {
+			return false;
+
+		}
+
+	}
+	////////////////// recoitTir//////////////////////
+
+	public boolean recoitTir(Coordonnee c) {
+
+		if (this.contient(c)) {
+// ajouter le tir dans partiesTouchee
+		
+			partiesTouchees[nbTouchees]=c;
+			nbTouchees++;
+			return true;
 		} else {
 
-			return true;
-
-		}
-
-		
-	}
-	//////////////////////////////////////////////
-	
-	public boolean touche(Navire n){
-		
-		if((n.fin.getLigne()==this.debut.getLigne()-1)||(n.debut.getLigne()==this.fin.getLigne()+1)||(n.fin.getColonne()==this.debut.getColonne()-1)||(n.debut.getColonne()==this.fin.getColonne()+1))
-		{return true;
-		}else {return false ;}
-	}
-////////////////////////////////
-public boolean chevauche(Navire n){
-		
-		
-		if (((fin.getLigne() - n.debut.getLigne())>=0)||((fin.getColonne() - n.debut.getColonne())>=0)) {
-			return true;
-		}
-		
-		else{
 			return false;
-			
 		}
-		
+
 	}
-	//////////////////recoitTir//////////////////////
-	
-public boolean recoitTir(Coordonnee c){
-	
-	
-	if(!this.contient(c)&&(!estTouche( c))){
-		
-		
-		return true;
-	}else {
-		partiesTouchees[nbTouchees]=c;
-		nbTouchees++;
-		return false;}
-	
-}	
 
 	public boolean estTouche(Coordonnee c) {
-		boolean res = false;
-		for (int i = 0; i <=nbTouchees ; i++) {
-			if (this.contient(c)&&(partiesTouchees[i].equals(c))) {
-				res=true ;break;
-			}
+		for (int i = 0; i < nbTouchees; i++)
+			if ((this.partiesTouchees[i].equals(c)))
+				return true;
+		return false;
+	}
 
-		}
-		return res;
-	 }
-public boolean estTouche() {
-	
-	return (this.nbTouchees>=1);
-}
-	
-public boolean estCoule() {
-	
-	return(estTouche()&&(this.nbTouchees==partiesTouchees.length));
-}
+	public boolean estTouche() {
 
+		return (this.nbTouchees >= 1);
+	}
+
+	public boolean estCoule() {
+
+		return (estTouche() && (this.nbTouchees == partiesTouchees.length));
+	}
 
 	/////////////////////////////////////////////////////////
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		Navire n = new Navire(new Coordonnee("A6"), 4, false);
-		Navire n1 = new Navire(new Coordonnee("B6"), 4, false);
-		//Coordonnee C5=new Coordonnee("A9");
+		Navire n = new Navire(new Coordonnee("B1"), 5, false);
+		// Navire n1 = new Navire(new Coordonnee("B6"), 4, false);
+		// Coordonnee C5=new Coordonnee("A9");
 
 		System.out.println(n);
-		//n.contient(new Coordonnee("B5"));
-		System.out.println(n.contient(new Coordonnee("B3")));
-      //System.out.println(n.touche(new Navire (new Coordonnee("D6"),4,true)));
-		System.out.println(n.recoitTir(new Coordonnee("M6")));
-		System.out.println(n.estTouche(new Coordonnee("A6")));
+		// n.contient(new Coordonnee("B5"));
+		System.out.println("test de contient : " + n.contient(new Coordonnee("B1")));
+		Coordonnee c = new Coordonnee("A2");
+		System.out.println(c.getLigne() + ":" + c.getColonne());
+		
+		System.out.println(n.touche(new Navire(new Coordonnee("C2"), 4, false)));
+		 System.out.println("test de recoitTir : " + n.recoitTir(new Coordonnee("E1")));
+		 System.out.println("hello");
+		 System.out.println(n.nbTouchees);
 
-		//System.out.println(n.chevauche(n1));
-		
-		
-      
-      
-      
+		 System.out.println("test de estTouche : " + n.estTouche(new Coordonnee("F1")));
+
+//		System.out.println(n.chevauche(n1));
+
 	}
 
 }

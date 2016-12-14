@@ -24,7 +24,7 @@ public class Coordonnee {
 	}
 	public Coordonnee(String s) {
 		
-		this.ligne=Integer.parseInt(s.substring(1, 2));
+		this.ligne=Integer.parseInt(s.substring(1, 2)) - 1;
 		this.colonne=(int)(s.charAt(0))-65;
 		if((this.ligne<0)|| (this.ligne>26)|| (this.colonne<0)|| (this.colonne>26)){
 			throw new RuntimeException( "Indice  hors limite" );}
